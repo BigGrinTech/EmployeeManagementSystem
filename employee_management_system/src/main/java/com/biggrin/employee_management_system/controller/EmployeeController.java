@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3002")
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
@@ -40,15 +41,18 @@ public class EmployeeController {
        return ResponseEntity.ok(employee);
     }
 
-   /* // update employee rest api
+    // update employee rest api
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails){
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) throws ResourceNotFoundException {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
 
         employee.setFirstName(employeeDetails.getFirstName());
         employee.setLastName(employeeDetails.getLastName());
-        employee.setEmailId(employeeDetails.getEmailId());
+       employee.setDepartment(employeeDetails.getDepartment());
+       employee.setDesignation(employeeDetails.getDesignation());
+       employee.setPhone(employeeDetails.getPhone());
+       employee.setSalary(employeeDetails.getSalary());
 
         Employee updatedEmployee = employeeRepository.save(employee);
         return ResponseEntity.ok(updatedEmployee);
@@ -56,7 +60,7 @@ public class EmployeeController {
 
     // delete employee rest api
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id){
+    public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id) throws ResourceNotFoundException {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
 
@@ -64,6 +68,6 @@ public class EmployeeController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return ResponseEntity.ok(response);
-    }*/
+    }
 
 }
